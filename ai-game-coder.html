@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free AI Game HTML Coder — Describe a Game, Get Playable HTML | Digital Infohub</title>
+<meta name="description" content="Free AI game coder: describe any game idea and get complete playable HTML, CSS and JavaScript with an instant live preview. Powered by free Pollinations AI. No sign-up needed." />
+<meta name="author" content="Digital Infohub" />
+<link rel="canonical" href="https://digitalinfohub.net/ai-game-coder.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Free AI Game HTML Coder — Digital Infohub" />
+<meta property="og:description" content="Describe a game and let AI write the full HTML code with a live preview — completely free." />
+<meta property="og:image" content="https://digitalinfohub.net/logo.png" />
+<link rel="icon" type="image/png" href="logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="index.html" aria-label="Digital Infohub home">
+      <img class="brand-logo" src="logo.png" alt="Digital Infohub logo" width="46" height="46" />
+      <div class="brand-name">Digital Infohub<span>Games · Design · Assets</span></div>
+    </a>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li class="has-dropdown">
+          <a href="games.html" aria-haspopup="true">Our Games <span class="caret">▾</span></a>
+          <ul class="dropdown-menu">
+            <li><a href="games.html"><strong>Games &amp; Projects</strong><small>All games from Digital Infohub on one page</small></a></li>
+            <li><div class="dropdown-divider"></div></li>
+            <li><a href="https://digitalinfohub.net/games" target="_blank" rel="noopener"><strong>Random Ryan Digital Games</strong><small>The full game hub — digitalinfohub.net/games</small></a></li>
+            <li><a href="https://gd.games/randomryandigital/" target="_blank" rel="noopener"><strong>Random Ryan Digital on GameDistribution</strong></a></li>
+            <li><a href="https://rrd.gamejolt.io/" target="_blank" rel="noopener"><strong>Random Ryan Digital on Game Jolt</strong></a></li>
+            <li><a href="https://random-ryan-digital.itch.io/" target="_blank" rel="noopener"><strong>Random Ryan Digital on itch.io</strong></a></li>
+            <li><div class="dropdown-divider"></div></li>
+            <li><a href="https://gd.games/artifyspace" target="_blank" rel="noopener"><strong>Artify Space Games</strong><small>Games Artify Space helped create for Random Ryan Digital</small></a></li>
+          </ul>
+        </li>
+        <li><a href="tools.html" class="active">Free Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="page-header">
+      <p class="breadcrumb"><a href="index.html">Home</a> › <a href="tools.html">Free Tools</a> › AI Game Coder</p>
+      <h1>Free AI Game HTML Coder 🤖🎮</h1>
+      <p>Describe any game idea in plain English and watch AI write the complete HTML, CSS and JavaScript — then play it instantly in the live preview. 100% free, no account required.</p>
+    </div>
+
+    <div class="tool-layout">
+      <!-- Input panel -->
+      <div class="tool-panel reveal">
+        <h3>1. Describe your game</h3>
+        <p class="hint">The more detail you give, the better the result. Think about genre, controls, goal and style.</p>
+        <textarea id="gamePrompt" class="prompt-box" placeholder="e.g. A snake game where the snake is a little orange cat chasing mice. Arrow key controls, score counter, speed increases every 5 mice caught, retro pixel look on a dark green background…"></textarea>
+
+        <div class="example-chips" aria-label="Example prompts">
+          <button class="example-chip" data-example="A breakout-style game where a paddle bounces a ball to break colourful bricks. Include a score, 3 lives and increasing ball speed each level.">Breakout bricks</button>
+          <button class="example-chip" data-example="A simple space shooter: control a spaceship at the bottom with arrow keys, shoot lasers at falling asteroids with the spacebar, score points and lose lives on collision.">Space shooter</button>
+          <button class="example-chip" data-example="A flappy-bird style game with a cute cat that flaps between obstacles. One button (space or click) to flap, score for each obstacle passed, game over screen with restart.">Flappy cat</button>
+          <button class="example-chip" data-example="A memory card matching game with emoji animals. Flip two cards at a time, match pairs, count moves and show a win screen with replay button.">Memory match</button>
+          <button class="example-chip" data-example="A dodge game: a smiley face moves left and right with arrow keys while falling meteors must be avoided. Score goes up over time, difficulty ramps up, game over with restart.">Meteor dodge</button>
+        </div>
+
+        <div class="tool-controls">
+          <label for="modelSelect" style="font-weight:600; font-size:0.9rem;">AI model:</label>
+          <select id="modelSelect">
+            <option value="openai" selected>OpenAI (default, great for code)</option>
+            <option value="openai-large">OpenAI Large (smarter, slower)</option>
+            <option value="mistral">Mistral (fast)</option>
+            <option value="llama">Llama (fast)</option>
+          </select>
+          <button id="generateBtn" class="btn">✨ Generate My Game</button>
+        </div>
+        <p class="hint" style="margin-top:10px;">Tip: press <strong>Ctrl + Enter</strong> to generate. Generation can take 15–60 seconds — please don't close the page.</p>
+
+        <div id="statusMsg" class="status" role="status" aria-live="polite"></div>
+      </div>
+
+      <!-- Output panel -->
+      <div class="tool-panel reveal d1" id="outputWrap" style="display:none;">
+        <h3>2. Your generated game</h3>
+        <p class="hint">Play it in the live preview, view the code, download it or open it in a new tab.</p>
+
+        <div class="preview-split">
+          <div>
+            <div class="output-label">Live Preview</div>
+            <div class="preview-frame-wrap">
+              <iframe id="previewFrame" title="Game live preview" sandbox="allow-scripts allow-same-origin"></iframe>
+            </div>
+          </div>
+          <div>
+            <div class="output-label">Generated Code</div>
+            <div class="code-pane"><pre id="codeOutput"></pre></div>
+          </div>
+        </div>
+
+        <div class="output-actions">
+          <button id="previewBtn" class="btn small secondary" disabled>▶ Reload Preview</button>
+          <button id="newWinBtn" class="btn small secondary" disabled>⤢ Open in New Tab</button>
+          <button id="downloadBtn" class="btn small" disabled>⬇ Download .html</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <section class="section">
+      <div class="section-title reveal">
+        <h2>How It Works</h2>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal" style="padding:28px 24px;">
+          <h3>① Describe</h3>
+          <p>Type your game idea into the box — genre, controls, visuals, anything you like. Or tap one of the example chips to start instantly.</p>
+        </div>
+        <div class="card reveal d1" style="padding:28px 24px;">
+          <h3>② AI Codes It</h3>
+          <p>We send your prompt to the free <a href="https://pollinations.ai" target="_blank" rel="noopener nofollow">Pollinations.AI</a> text model, which writes a complete single-file HTML5 game just for you.</p>
+        </div>
+        <div class="card reveal d2" style="padding:28px 24px;">
+          <h3>③ Play &amp; Keep</h3>
+          <p>The game runs immediately in a safe sandboxed preview. Download the file to keep it, edit the code, or share your creation with friends.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" style="padding-top:0;">
+      <div class="section-title reveal"><h2>Frequently Asked Questions</h2></div>
+      <div style="max-width: 760px; margin: 0 auto;">
+        <details class="faq-item reveal">
+          <summary>Is this really free?</summary>
+          <div class="faq-body"><p>Yes. The tool uses the free Pollinations.AI service and there is nothing to install, no sign-up and no payment.</p></div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Why do I sometimes see "temporarily unavailable"?</summary>
+          <div class="faq-body"><p>The free public AI service occasionally gets busy or rate-limited. When that happens we show the message <em>"Free AI via Pollinations is temporarily unavailable, please come back later"</em>. Just try again in a minute or two.</p></div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Can I use the generated code in my own projects?</summary>
+          <div class="faq-body"><p>The generated games are single HTML files you can download, open and edit in any text editor. They're great for learning how simple browser games work. As with all AI output, review the code before publishing it anywhere.</p></div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Does the tool store my prompts?</summary>
+          <div class="faq-body"><p>Nothing is stored on this website — your prompt is sent directly from your browser to the AI service when you press Generate. See our <a href="privacy-policy.html">Privacy Policy</a> for details.</p></div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>What makes a good game description?</summary>
+          <div class="faq-body"><p>Mention the genre (platformer, puzzle, shooter…), the controls (keys/mouse/touch), the objective (score, survive, collect) and a visual style (pixel, neon, pastel, minimal). Short classic concepts work best — you can always regenerate with tweaks.</p></div>
+        </details>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="logo.png" alt="Digital Infohub logo" width="42" height="42" />
+          <strong>Digital Infohub</strong>
+        </div>
+        <p class="footer-about">Home of Random Ryan Digital games, Artify Space 3D assets and professional digital design services.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="games.html">Games &amp; Projects</a></li>
+          <li><a href="tools.html">Free Tools</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Game Hubs</h4>
+        <ul>
+          <li><a href="https://digitalinfohub.net/games" target="_blank" rel="noopener">Random Ryan Digital</a></li>
+          <li><a href="https://gd.games/randomryandigital/" target="_blank" rel="noopener">RRD on GameDistribution</a></li>
+          <li><a href="https://rrd.gamejolt.io/" target="_blank" rel="noopener">RRD on Game Jolt</a></li>
+          <li><a href="https://random-ryan-digital.itch.io/" target="_blank" rel="noopener">RRD on itch.io</a></li>
+          <li><a href="https://gd.games/artifyspace" target="_blank" rel="noopener">Artify Space Games</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms &amp; Conditions</a></li>
+          <li><a href="cookie-policy.html">Cookie Policy</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+          <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span id="footerYear">2026</span> Digital Infohub · digitalinfohub.net</div>
+      <div>For services: <a href="mailto:services@digitalinfohub.net">services@digitalinfohub.net</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ai-game-coder.js"></script>
+<script>
+  // Example chip filler
+  document.querySelectorAll(".example-chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      document.getElementById("gamePrompt").value = chip.dataset.example;
+      document.getElementById("gamePrompt").focus();
+    });
+  });
+</script>
+</body>
+</html>
