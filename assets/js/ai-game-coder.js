@@ -1,6 +1,10 @@
 /* =========================================================
-   Digital Infohub — Free AI Game HTML Coder
+   Neko-Yotsuba — Free AI Game Creator
    Uses the free Pollinations.AI text endpoint (no API key).
+   Verified 2026: https://text.pollinations.ai/models currently
+   lists "openai-fast" (GPT-OSS 20B) for anonymous users; the
+   alias "openai" is also accepted. No paid/private models are
+   assumed or hardcoded, and no credentials are used.
    ========================================================= */
 (function () {
   "use strict";
@@ -15,6 +19,8 @@
   var previewBtn = document.getElementById("previewBtn");
   var downloadBtn= document.getElementById("downloadBtn");
   var newWinBtn  = document.getElementById("newWinBtn");
+  var copyBtn    = document.getElementById("copyBtn");
+  var resetBtn   = document.getElementById("resetBtn");
   var frame      = document.getElementById("previewFrame");
   var outputWrap = document.getElementById("outputWrap");
 
@@ -58,10 +64,22 @@
     );
   }
 
+  function sanitiseHTML(html) {
+    // Strip external resource loads and dangerous attributes so the
+    // generated game stays self-contained inside its sandboxed iframe.
+    return html
+      .replace(/<link[^>]*href=["']https?:\/\/[^"']*["'][^>]*>/gi, "")
+      .replace(/<script[^>]+src=["'][^"']*["'][^>]*>\s*<\/script>/gi, "")
+      .replace(/\son\w+\s*=\s*"[^"]*"/gi, "")
+      .replace(/\son\w+\s*=\s*'[^']*'/gi, "")
+      .replace(/\son\w+\s*=\s*[^\s>]+/gi, "")
+      .replace(/javascript:/gi, "");
+  }
+
   function callPollinations(systemPrompt) {
     var endpoint = "https://text.pollinations.ai/openai";
     var body = JSON.stringify({
-      model: modelEl.value,
+      model: modelEl ? modelEl.value : "openai-fast",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: "Make the game now." }
@@ -106,6 +124,7 @@
     previewBtn.disabled = false;
     downloadBtn.disabled = false;
     newWinBtn.disabled = false;
+    if (copyBtn) copyBtn.disabled = false;
   }
 
   /* ---------- Events ---------- */
@@ -127,7 +146,7 @@
 
     callPollinations(buildSystemPrompt(idea))
       .then(function (raw) {
-        var html = extractHTML(raw);
+        var html = sanitiseHTML(extractHTML(raw));
         if (!html || html.length < 80 || html.indexOf("<") === -1) {
           throw new Error("unusable");
         }
@@ -150,6 +169,45 @@
   previewBtn.addEventListener("click", function () {
     if (currentHTML) renderPreview(currentHTML);
   });
+
+  if (copyBtn) {
+    copyBtn.addEventListener("click", function () {
+      if (!currentHTML) return;
+      function done() {
+        copyBtn.textContent = "✓ Copied!";
+        setTimeout(function () { copyBtn.textContent = "⧉ Copy Code"; }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(currentHTML).then(done, function () {
+          setStatus("Copying was blocked by your browser — select the code and copy manually.", "info");
+        });
+      } else {
+        // Fallback: select the code block for manual copying
+        var range = document.createRange();
+        range.selectNodeContents(codeEl);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        setStatus("The generated code is selected — press Ctrl/Cmd + C to copy it.", "info");
+      }
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      currentHTML = "";
+      codeEl.textContent = "";
+      frame.srcdoc = "";
+      outputWrap.style.display = "none";
+      previewBtn.disabled = true;
+      downloadBtn.disabled = true;
+      newWinBtn.disabled = true;
+      if (copyBtn) copyBtn.disabled = true;
+      setStatus("", null);
+      promptEl.value = "";
+      promptEl.focus();
+    });
+  }
 
   newWinBtn.addEventListener("click", function () {
     if (!currentHTML) return;

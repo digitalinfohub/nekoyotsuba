@@ -1,6 +1,7 @@
 /* =========================================================
-   Digital Infohub — Shared Stylesheet
-   Clean white design with warm orange accents (matches logo)
+   Neko-Yotsuba — Shared Stylesheet
+   Clean white design with dark text and warm orange accents
+   (selected to complement the supplied logo.png)
    ========================================================= */
 
 :root {
@@ -227,6 +228,23 @@ p  { color: var(--ink-soft); margin: 0 0 1em; }
   transition: all .2s var(--ease);
 }
 .menu-toggle:active { transform: translateY(2px); }
+
+/* ---------- Skip link (accessibility) ---------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--orange-600);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 700;
+  z-index: 200;
+}
+.skip-link:focus {
+  left: 0;
+  color: #fff;
+}
 
 /* ---------- Hero ---------- */
 .hero {
